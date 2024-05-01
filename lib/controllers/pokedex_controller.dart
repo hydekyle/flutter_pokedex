@@ -1,23 +1,31 @@
-import 'dart:convert';
 import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
 
 import '../models/pokemon/pokemon.dart';
+import '../models/region/region.dart';
 
 class PokedexController extends GetxController {
-  final ApiPokemonService pokeApi = ApiPokemonService();
+  final ApiPokemonService apiService = ApiPokemonService();
+
+  late final Region region;
+  final isDataLoaded = false.obs;
   final RxList<Pokemon> pokemonList = RxList<Pokemon>();
 
   init() async {
-    print("inicializao");
+    print("START!!!!!");
+
+    await loadRegionData();
     await loadPokemonData();
-    print("datos leidos");
+    isDataLoaded.value = true;
+
+    print("END!!!!!");
+  }
+
+  loadRegionData() async {
+    region = await apiService.getRegionDataByGeneration(1);
   }
 
   loadPokemonData() async {
-    final response = await ApiPokemonService().getPokemonData(1);
-    final data = jsonEncode(response.body);
-    final pokemon = Pokemon.fromJson(jsonDecode(data));
-    pokemonList.add(pokemon);
+    pokemonList.add(await apiService.getPokemonDataByID(1));
   }
 }

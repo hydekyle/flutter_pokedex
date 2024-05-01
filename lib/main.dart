@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
       body: GetBuilder<PokedexController>(
         init: PokedexController()..init(),
         builder: (controller) => Obx(
-          () => controller.pokemonList.isEmpty
+          () => controller.isDataLoaded.value == false
               ? const CircularProgressIndicator()
               : Text(controller.pokemonList[0].name),
         ),
