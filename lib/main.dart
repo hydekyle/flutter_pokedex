@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/controllers/pokedex_controller.dart';
+import 'package:get/get.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const Pokedex());
 }
 
@@ -9,7 +12,7 @@ class Pokedex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Pokédex Code Challenge',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -30,7 +33,14 @@ class Home extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Pokédex Code Challenge'),
       ),
-      body: const Center(child: Text('Lee el README para comenzar')),
+      body: GetBuilder<PokedexController>(
+        init: PokedexController()..init(),
+        builder: (controller) => Obx(
+          () => controller.pokemonList.isEmpty
+              ? const CircularProgressIndicator()
+              : Text(controller.pokemonList[0].name),
+        ),
+      ),
     );
   }
 }
