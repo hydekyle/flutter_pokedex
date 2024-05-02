@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'region.dart';
+part of 'generation.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Region _$RegionFromJson(Map<String, dynamic> json) => Region(
+Generation _$GenerationFromJson(Map<String, dynamic> json) => Generation(
       abilities: json['abilities'] as List<dynamic>,
       id: (json['id'] as num).toInt(),
       mainRegion:
@@ -29,7 +29,8 @@ Region _$RegionFromJson(Map<String, dynamic> json) => Region(
           .toList(),
     );
 
-Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
+Map<String, dynamic> _$GenerationToJson(Generation instance) =>
+    <String, dynamic>{
       'abilities': instance.abilities,
       'id': instance.id,
       'main_region': instance.mainRegion,

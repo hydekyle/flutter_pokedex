@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/controllers/pokedex_controller.dart';
+import 'package:flutter_pokedex/ui/pokedex.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -33,14 +33,7 @@ class Home extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Pokédex Code Challenge'),
       ),
-      body: GetBuilder<PokedexController>(
-        init: PokedexController()..init(),
-        builder: (controller) => Obx(
-          () => controller.isDataLoaded.value == false
-              ? const CircularProgressIndicator()
-              : Text(controller.pokemonList[0].name),
-        ),
-      ),
+      body: const PokedexUI(),
     );
   }
 }

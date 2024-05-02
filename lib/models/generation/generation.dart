@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'region.g.dart';
+part 'Generation.g.dart';
 
 @JsonSerializable()
-class Region {
+class Generation {
   List<dynamic> abilities;
   int id;
   @JsonKey(name: 'main_region')
@@ -16,7 +16,7 @@ class Region {
   @JsonKey(name: 'version_groups')
   List<MainRegion> versionGroups;
 
-  Region({
+  Generation({
     required this.abilities,
     required this.id,
     required this.mainRegion,
@@ -28,15 +28,17 @@ class Region {
     required this.versionGroups,
   });
 
-  factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
+  factory Generation.fromJson(Map<String, dynamic> json) =>
+      _$GenerationFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RegionToJson(this);
+  Map<String, dynamic> toJson() => _$GenerationToJson(this);
 }
 
 @JsonSerializable()
 class MainRegion {
   String name;
   String url;
+  int? id;
 
   MainRegion({
     required this.name,
@@ -46,6 +48,14 @@ class MainRegion {
       _$MainRegionFromJson(json);
 
   Map<String, dynamic> toJson() => _$MainRegionToJson(this);
+
+  int getMyID() {
+    if (id == null) {
+      final res = url.split("/");
+      id = int.parse(res[res.length - 2]);
+    }
+    return id!;
+  }
 }
 
 @JsonSerializable()
