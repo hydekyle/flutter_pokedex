@@ -1,12 +1,14 @@
 import 'package:flutter_pokedex/models/pokemon_form/pokemon_form.dart';
 import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
+
 import '../models/generation/generation.dart';
 
 class PokedexController extends GetxController {
   final ApiPokemonService apiService = ApiPokemonService();
   late final Generation generation;
-  final RxList<PokemonForm> pokemonList = RxList<PokemonForm>();
+  final pokemonList = RxList<PokemonForm>();
+  final pokemonFilter = "".obs;
 
   init() async {
     print("START!!!!!");
@@ -29,6 +31,5 @@ class PokedexController extends GetxController {
       pokemonList.add(await apiService
           .getPokemonFormByID(generation.pokemonSpecies[x].getMyID()));
     }
-    pokemonList.add(await apiService.getPokemonFormByID(1));
   }
 }

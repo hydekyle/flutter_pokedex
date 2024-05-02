@@ -49,6 +49,7 @@ class MainRegion {
 
   Map<String, dynamic> toJson() => _$MainRegionToJson(this);
 
+  // We can get the ID from the url
   int getMyID() {
     if (id == null) {
       final res = url.split("/");
