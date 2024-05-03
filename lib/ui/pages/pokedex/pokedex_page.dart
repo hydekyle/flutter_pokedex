@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/controllers/pokedex_controller.dart';
+import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_controller.dart';
 import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
 
-import '../models/pokemon/pokemon.dart';
+import '../../../models/dto/pokemon/pokemon.dart';
 
-class PokedexUI extends GetView<PokedexController> {
-  const PokedexUI({super.key});
+class PokedexPage extends GetView<PokedexController> {
+  const PokedexPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class PokedexUI extends GetView<PokedexController> {
             ? const CircularProgressIndicator()
             : Column(
                 children: [
+                  // Pokemon Elastic List
                   SizedBox(
                     height: context.height * 0.5,
                     child: pokemonListPanel(
@@ -27,6 +28,7 @@ class PokedexUI extends GetView<PokedexController> {
                           .toList(),
                     ),
                   ),
+                  // Name Filter
                   Center(
                     child: SizedBox(
                       width: 200,

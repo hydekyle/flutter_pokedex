@@ -1,8 +1,7 @@
-import 'package:flutter_pokedex/models/pokemon_data/pokemon_data.dart';
+import 'package:flutter_pokedex/models/dto/pokemon_data/pokemon_data.dart';
 import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
-
-import '../models/pokemon_generation/pokemon_generation.dart';
+import '../../../models/dto/pokemon_generation/pokemon_generation.dart';
 
 class PokedexController extends GetxController {
   final ApiPokemonService apiService = ApiPokemonService();

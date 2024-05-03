@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/ui/pokedex.dart';
+import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_page.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Pokédex Code Challenge'),
       ),
-      body: const PokedexUI(),
+      body: const PokedexPage(),
     );
   }
 }

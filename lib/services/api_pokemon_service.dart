@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_pokedex/models/pokemon_data/pokemon_data.dart';
-import '../models/pokemon_generation/pokemon_generation.dart';
+import 'package:flutter_pokedex/models/dto/pokemon_data/pokemon_data.dart';
+import '../models/dto/pokemon_generation/pokemon_generation.dart';
 
 class ApiPokemonService {
   // Singleton instance
