@@ -2,32 +2,40 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_pokedex/models/pokemon_form/pokemon_form.dart';
-import 'package:get/get_connect/connect.dart';
-import '../models/generation/generation.dart';
+import 'package:flutter_pokedex/models/pokemon_data/pokemon_data.dart';
+import '../models/pokemon_generation/pokemon_generation.dart';
 
-class ApiPokemonService extends GetConnect {
-  Future<Generation> getRegionDataByGeneration(int generation) async {
-    return Generation.fromJson(await getDataFromEndpoint(
+class ApiPokemonService {
+  // Singleton instance
+  static final ApiPokemonService _singleton = ApiPokemonService._internal();
+
+  factory ApiPokemonService() {
+    return _singleton;
+  }
+  ApiPokemonService._internal();
+
+  // API endpoints
+  Future<PokemonGeneration> getRegionDataByGeneration(int generation) async {
+    return PokemonGeneration.fromJson(await _getDataFromEndpoint(
         "https://pokeapi.co/api/v2/generation/$generation"));
   }
 
-  // Future<Pokemon> getPokemonDataByID(int id) async {
-  //   return Pokemon.fromJson(await getDataFromEndpoint(
-  //       "https://pokeapi.co/api/v2/pokemon-species/$id"));
-  // }
-
-  Future<PokemonForm> getPokemonFormByID(int id) async {
-    return PokemonForm.fromJson(await getDataFromEndpoint(
-        "https://pokeapi.co/api/v2/pokemon-form/$id"));
+  Future<PokemonData> getPokemonDataByID(int id) async {
+    return PokemonData.fromJson(
+        await _getDataFromEndpoint("https://pokeapi.co/api/v2/pokemon/$id"));
   }
 
-  getDataFromEndpoint(String endpoint) async {
+  Widget getPokemonImageByID(int pokemonID) => getImageFromEndpoint(
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonID.png");
+
+  // Try get cached data if available before calling API
+  _getDataFromEndpoint(String endpoint) async {
     final data = await DefaultCacheManager().getSingleFile(endpoint);
     return jsonDecode(await data.readAsString());
   }
 
-  getImageFromEndpoint(String endpoint) => CachedNetworkImage(
+  // Try get cached image if available before calling API
+  Widget getImageFromEndpoint(String endpoint) => CachedNetworkImage(
         imageUrl: endpoint,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(

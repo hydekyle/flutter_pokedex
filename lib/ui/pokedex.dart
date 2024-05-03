@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/controllers/pokedex_controller.dart';
-import 'package:flutter_pokedex/models/pokemon_form/pokemon_form.dart';
+import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
+
+import '../models/pokemon/pokemon.dart';
 
 class PokedexUI extends GetView<PokedexController> {
   const PokedexUI({super.key});
@@ -19,7 +21,7 @@ class PokedexUI extends GetView<PokedexController> {
                   SizedBox(
                     height: context.height * 0.5,
                     child: pokemonListPanel(
-                      controller.pokemonList
+                      controller.generation.pokemonSpecies
                           .where((a) =>
                               a.name.contains(controller.pokemonFilter.value))
                           .toList(),
@@ -44,8 +46,7 @@ class PokedexUI extends GetView<PokedexController> {
     );
   }
 
-  Widget pokemonListPanel(List<PokemonForm> pokemonList) =>
-      ElasticListView.builder(
+  Widget pokemonListPanel(List<Pokemon> pokemonList) => ElasticListView.builder(
         itemCount: pokemonList.length,
         itemBuilder: (BuildContext context, int index) {
           return SizedBox(
@@ -53,49 +54,16 @@ class PokedexUI extends GetView<PokedexController> {
             child: Row(
               children: [
                 Text(
-                    "hola ${pokemonList[index].name} ${pokemonList[index].id}"),
+                  "hola ${pokemonList[index].name} ${pokemonList[index].getMyID()}",
+                ),
                 SizedBox.square(
                   dimension: 180,
-                  child: controller.apiService.getImageFromEndpoint(
-                      pokemonList[index].sprites.frontDefault),
-                )
+                  child: ApiPokemonService()
+                      .getPokemonImageByID(pokemonList[index].getMyID()),
+                ),
               ],
             ),
           );
         },
       );
-
-  List<Widget> helloWorld(List<PokemonForm> pokemonList) {
-    List<Widget> children = [];
-    for (var x = 0; x < pokemonList.length; x++) {
-      children.add(
-        Row(
-          children: [
-            Text("hola ${pokemonList[x].name} ${pokemonList[x].id}"),
-            SizedBox(
-              height: 200,
-              width: 200,
-              child: controller.apiService
-                  .getImageFromEndpoint(pokemonList[x].sprites.frontDefault),
-            )
-          ],
-        ),
-      );
-    }
-    return children;
-  }
-
-  // );
-  //   controller.region.pokemonSpecies.forEach((pokemon) =>
-  // Row(
-  //       children: [
-  //         Text("hola ${pokemon.name}"),
-  //         SizedBox(
-  //           height: 200,
-  //           width: 200,
-  //           child: controller.apiService
-  //               .getImageFromEndpoint(pokemon.sprites.frontDefault),
-  //         )
-  //       ],
-  //     ));
 }
