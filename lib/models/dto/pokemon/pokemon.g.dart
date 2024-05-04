@@ -1,5 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// dart run build_runner watch __delete_conflicting_outputs
 
 part of 'pokemon.dart';
 

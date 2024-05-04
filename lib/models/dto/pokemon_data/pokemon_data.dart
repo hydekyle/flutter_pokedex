@@ -3,6 +3,8 @@ part 'pokemon_data.g.dart';
 
 @JsonSerializable()
 class PokemonData {
+  String name;
+  int id;
   Sprites sprites;
   int weight;
   int height;
@@ -10,6 +12,8 @@ class PokemonData {
   List<Type> types;
 
   PokemonData({
+    required this.name,
+    required this.id,
     required this.cries,
     required this.height,
     required this.sprites,
