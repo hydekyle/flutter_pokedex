@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_page.dart';
+import 'package:flutter_pokedex/ui/pages/pokedex_page/pokedex_page.dart';
 import 'package:get/get.dart';
 
 void main() {

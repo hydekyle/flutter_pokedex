@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_controller.dart';
+import 'package:flutter_pokedex/ui/pages/captured_page/captured_page.dart';
+import 'package:flutter_pokedex/ui/pages/pokedex_page/pokedex_controller.dart';
 import 'package:get/get.dart';
 import '../../widgets/pokemon_list_panel.dart';
 
@@ -11,7 +12,7 @@ class PokedexPage extends GetView<PokedexController> {
     return GetBuilder<PokedexController>(
       init: PokedexController()..init(),
       builder: (controller) => Obx(
-        () => controller.generation !=
+        () => !controller.isDataLoaded.value
             ? const CircularProgressIndicator()
             : Column(
                 children: [
@@ -38,6 +39,11 @@ class PokedexPage extends GetView<PokedexController> {
                         ),
                       ),
                     ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Get.to(
+                        CapturedPage(capturedPokemon: controller.capturedList)),
+                    child: const Text("Tocame"),
                   ),
                 ],
               ),

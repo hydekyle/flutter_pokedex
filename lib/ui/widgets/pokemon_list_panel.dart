@@ -21,13 +21,10 @@ Widget pokemonListPanel(List<Pokemon> pokemonList) => ElasticListView.builder(
                 Text(
                   "hola ${pokemonList[index].name} ${pokemonList[index].id}",
                 ),
-                Hero(
-                  tag: pokemonList[index].id,
-                  child: SizedBox.square(
-                    dimension: 180,
-                    child: ApiPokemonService.getPokemonImageByID(
-                        pokemonList[index].id),
-                  ),
+                SizedBox.square(
+                  dimension: 180,
+                  child: ApiPokemonService.getPokemonImageByID(
+                      pokemonList[index].id),
                 ),
               ],
             ),
