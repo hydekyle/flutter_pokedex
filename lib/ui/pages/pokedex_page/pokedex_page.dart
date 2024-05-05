@@ -9,44 +9,36 @@ class PokedexPage extends GetView<PokedexController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PokedexController>(
-      init: PokedexController()..init(),
-      builder: (controller) => Obx(
-        () => !controller.isDataLoaded.value
-            ? const CircularProgressIndicator()
-            : Column(
-                children: [
-                  // Pokemon Elastic List
-                  SizedBox(
-                    height: context.height * 0.8,
-                    child: pokemonListPanel(
-                      controller.generation.pokemonSpecies
-                          .where((a) => a.name
-                              .contains(controller.pokemonNameFilter.value))
-                          .toList(),
-                    ),
-                  ),
-                  // Name Filter
-                  Center(
-                    child: SizedBox(
-                      width: 200,
-                      child: TextFormField(
-                        onChanged: (value) =>
-                            controller.pokemonNameFilter.value = value,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: 'Filter by name',
-                        ),
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => Get.to(CapturedPage()),
-                    child: const Text("Tocame"),
-                  ),
-                ],
+    return Column(
+      children: [
+        // Pokemon Elastic List
+        SizedBox(
+          height: context.height * 0.8,
+          child: pokemonListPanel(
+              controller.generation.pokemonSpecies
+                  .where((a) =>
+                      a.name.contains(controller.pokemonNameFilter.value))
+                  .toList(),
+              null),
+        ),
+        // Name Filter
+        Center(
+          child: SizedBox(
+            width: 200,
+            child: TextFormField(
+              onChanged: (value) => controller.pokemonNameFilter.value = value,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Filter by name',
               ),
-      ),
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => Get.to(const CapturedPage()),
+          child: const Text("Tocame"),
+        ),
+      ],
     );
   }
 }

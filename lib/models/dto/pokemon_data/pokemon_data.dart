@@ -9,7 +9,8 @@ class PokemonData {
   int weight;
   int height;
   Cries cries;
-  List<TypeSlot> types;
+  @JsonKey(name: 'types')
+  List<TypeSlot> typeSlots;
 
   PokemonData({
     required this.name,
@@ -17,7 +18,7 @@ class PokemonData {
     required this.cries,
     required this.height,
     required this.sprites,
-    required this.types,
+    required this.typeSlots,
     required this.weight,
   });
 

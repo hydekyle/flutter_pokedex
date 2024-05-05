@@ -21,9 +21,7 @@ class Pokemon {
   }
 
   Future<PokemonData> getPokemonData() async {
-    if (_pokemonData != null) {
-      _pokemonData = await ApiPokemonService.getPokemonDataByID(id);
-    }
+    _pokemonData ??= await ApiPokemonService.getPokemonDataByID(id);
     return _pokemonData!;
   }
 

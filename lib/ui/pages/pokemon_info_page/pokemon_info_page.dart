@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/services/api_pokemon_service.dart';
-import 'package:flutter_pokedex/ui/pages/pokedex_page/pokedex_controller.dart';
+import 'package:flutter_pokedex/ui/pages/captured_page/captured_controller.dart';
 import 'package:get/get.dart';
-import '../../../models/dto/pokemon/pokemon.dart';
 import '../../../models/dto/pokemon_data/pokemon_data.dart';
+import '../captured_page/captured_page.dart';
 
-class PokemonInfoPage extends GetView<PokedexController> {
+class PokemonInfoPage extends GetView<CapturedController> {
   final PokemonData pokemonData;
 
   const PokemonInfoPage({
@@ -15,6 +15,9 @@ class PokemonInfoPage extends GetView<PokedexController> {
 
   @override
   Widget build(BuildContext context) {
+    bool isCaptured = controller.capturedList
+            .firstWhereOrNull((element) => element.id == pokemonData.id) !=
+        null;
     return Column(
       children: [
         SizedBox.square(
@@ -25,13 +28,22 @@ class PokemonInfoPage extends GetView<PokedexController> {
         Text("Weight ${pokemonData.weight}"),
         Text("Height ${pokemonData.height}"),
         Row(
-          children: pokemonData.types
+          children: pokemonData.typeSlots
               .map((element) => Text(element.type.name))
               .toList(),
         ),
         ElevatedButton(
-          onPressed: () => controller.addToCapturedList(pokemonData.id),
-          child: const Text("CAPTURE!"),
+          onPressed: isCaptured
+              ? () {
+                  controller.deleteFromCapturedList(pokemonData.id);
+                  Get.back();
+                }
+              : () {
+                  Get.back();
+                  controller.addToCapturedList(pokemonData.id);
+                  Get.to(CapturedPage(animatedHeroID: pokemonData.id));
+                },
+          child: isCaptured ? const Text("RELEASE!") : const Text("CAPTURE!"),
         ),
       ],
     );

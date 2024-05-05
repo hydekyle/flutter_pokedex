@@ -5,27 +5,38 @@ import '../../models/dto/pokemon/pokemon.dart';
 import '../../services/api_pokemon_service.dart';
 import '../pages/pokemon_info_page/pokemon_info_page.dart';
 
-Widget pokemonListPanel(List<Pokemon> pokemonList) => ElasticListView.builder(
+Widget pokemonListPanel(List<Pokemon> pokemonList, int? heroTagID) =>
+    ElasticListView.builder(
       itemCount: pokemonList.length,
       itemBuilder: (BuildContext context, int index) {
         return SizedBox(
           height: 200,
           child: GestureDetector(
-            onTap: () =>
-                ApiPokemonService.getPokemonDataByID(pokemonList[index].id)
-                    .then((pokemonData) => Get.defaultDialog(
-                        content: PokemonInfoPage(pokemonData: pokemonData),
-                        title: pokemonData.name)),
+            onTap: () => pokemonList[index]
+                .getPokemonData()
+                .then((pokemonData) => Get.defaultDialog(
+                      title: pokemonData.name,
+                      content: PokemonInfoPage(pokemonData: pokemonData),
+                    )),
             child: Row(
               children: [
                 Text(
                   "hola ${pokemonList[index].name} ${pokemonList[index].id}",
                 ),
-                SizedBox.square(
-                  dimension: 180,
-                  child: ApiPokemonService.getPokemonImageByID(
-                      pokemonList[index].id),
-                ),
+                heroTagID == null || pokemonList[index].id == heroTagID
+                    ? Hero(
+                        tag: pokemonList[index].id,
+                        child: SizedBox.square(
+                          dimension: 180,
+                          child: ApiPokemonService.getPokemonImageByID(
+                              pokemonList[index].id),
+                        ),
+                      )
+                    : SizedBox.square(
+                        dimension: 180,
+                        child: ApiPokemonService.getPokemonImageByID(
+                            pokemonList[index].id),
+                      ),
               ],
             ),
           ),
