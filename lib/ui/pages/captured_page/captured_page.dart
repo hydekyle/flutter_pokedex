@@ -68,7 +68,7 @@ class CapturedPage extends GetView<CapturedController> {
               )),
           ElevatedButton(
             onPressed: () {
-              Get.changeTheme(ThemeData.dark());
+              controller.changeThemeByCaputedList();
             },
             child: const Text("THEME"),
           ),

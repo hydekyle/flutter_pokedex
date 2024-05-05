@@ -25,7 +25,8 @@ class Pokedex extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Pokédex Code Challenge',
-      theme: Get.theme,
+      theme: ThemeData.light(),
+      themeMode: ThemeMode.light,
       home: const Home(),
     );
   }

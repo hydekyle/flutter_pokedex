@@ -125,7 +125,8 @@ class CapturedController extends GetxController {
     final maxValue = myList.last.value;
     final isMaxValueDraw =
         myList.where((test) => test.value == maxValue).toList().length >= 2;
-    print(isMaxValueDraw);
+
+    print("Empate de valores: $isMaxValueDraw");
 
     Get.changeTheme(ThemeData.dark());
 
