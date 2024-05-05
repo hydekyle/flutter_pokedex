@@ -6,11 +6,16 @@ import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final pokedexController = Get.put(PokedexController());
-  await pokedexController.init();
-  final capturedController = Get.put(CapturedController());
-  await capturedController.init();
+  await initControllers();
   runApp(const Pokedex());
+}
+
+initControllers() async {
+  final pokedexController = Get.put(PokedexController(generationID: 1));
+  await pokedexController.init();
+  final capturedController =
+      Get.put(CapturedController(generation: pokedexController.generation));
+  await capturedController.init();
 }
 
 class Pokedex extends StatelessWidget {
@@ -20,10 +25,7 @@ class Pokedex extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Pokédex Code Challenge',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
-      ),
+      theme: Get.theme,
       home: const Home(),
     );
   }
@@ -36,7 +38,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Get.theme.colorScheme.inversePrimary,
         title: const Text('Pokédex Code Challenge'),
       ),
       body: const PokedexPage(),

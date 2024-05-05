@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/models/dto/pokemon/pokemon.dart';
 import 'package:flutter_pokedex/models/dto/pokemon_data/pokemon_data.dart';
 import 'package:get/get.dart';
@@ -6,10 +9,12 @@ import '../../../models/dto/pokemon_generation/pokemon_generation.dart';
 import '../pokedex_page/pokedex_controller.dart';
 
 class CapturedController extends GetxController {
-  final PokemonGeneration generation = Get.find<PokedexController>().generation;
+  final PokemonGeneration generation;
   final capturedList = RxList<Pokemon>();
   final filteredCapturedList = RxList<Pokemon>();
   final filterTypeList = RxList<String>();
+
+  CapturedController({required this.generation});
 
   List<String> get availableTypeNames =>
       generation.types.map((type) => type.name).toList();
@@ -75,11 +80,11 @@ class CapturedController extends GetxController {
           .toList();
     }
 
-    print(pokemonData.length);
     for (var x = 0; x < pokemonData.length; x++) {
       filteredCapturedList.add(generation.pokemonSpecies
           .firstWhere((pokemon) => pokemon.id == pokemonData[x].id));
     }
+
     filteredCapturedList.refresh();
   }
 
@@ -99,11 +104,40 @@ class CapturedController extends GetxController {
     List<PokemonData> capturedPokemonDataList =
         await getPokemonDataListByPokemonList(capturedList);
 
-    List<PokemonType> pokemonTypes = [];
+    HashMap<String, int> totalTypeAmountMap = HashMap<String, int>();
+
     for (var x = 0; x < capturedPokemonDataList.length; x++) {
-      for (var y = 0; y < capturedPokemonDataList[x].typeSlots.length; y++) {
-        pokemonTypes.add(capturedPokemonDataList[x].typeSlots[y].type);
+      final pokemonTypeSlots = capturedPokemonDataList[x].typeSlots;
+      for (var y = 0; y < pokemonTypeSlots.length; y++) {
+        final typeName = pokemonTypeSlots[y].type.name;
+        if (totalTypeAmountMap[typeName] != null) {
+          totalTypeAmountMap[typeName] = totalTypeAmountMap[typeName]! + 1;
+        } else {
+          totalTypeAmountMap[typeName] = 1;
+        }
+
+        //pokemonTypes.add(capturedPokemonDataList[x].typeSlots[y].type);
       }
+    }
+
+    final myList = totalTypeAmountMap.entries.toList();
+    myList.sort((a, b) => a.value.compareTo(b.value));
+    final maxValue = myList.last.value;
+    final isMaxValueDraw =
+        myList.where((test) => test.value == maxValue).toList().length >= 2;
+    print(isMaxValueDraw);
+
+    Get.changeTheme(ThemeData.dark());
+
+    myList.forEach((action) => print("${action.key}:${action.value}"));
+  }
+
+  MaterialColor getColorsByPokemonType(String typeName) {
+    switch (typeName) {
+      case "bug":
+        return Colors.pink;
+      case _:
+        return Colors.deepOrange;
     }
   }
 
