@@ -32,6 +32,7 @@ class CapturedController extends GetxController {
       }
     }
 
+    changeThemeByCaputedList();
     capturedList.listen((p0) => changeThemeByCaputedList());
   }
 
