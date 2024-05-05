@@ -13,7 +13,7 @@ PokemonData _$PokemonDataFromJson(Map<String, dynamic> json) => PokemonData(
       height: (json['height'] as num).toInt(),
       sprites: Sprites.fromJson(json['sprites'] as Map<String, dynamic>),
       types: (json['types'] as List<dynamic>)
-          .map((e) => Type.fromJson(e as Map<String, dynamic>))
+          .map((e) => TypeSlot.fromJson(e as Map<String, dynamic>))
           .toList(),
       weight: (json['weight'] as num).toInt(),
     );
@@ -29,12 +29,23 @@ Map<String, dynamic> _$PokemonDataToJson(PokemonData instance) =>
       'types': instance.types,
     };
 
-Element _$ElementFromJson(Map<String, dynamic> json) => Element(
+TypeSlot _$TypeSlotFromJson(Map<String, dynamic> json) => TypeSlot(
+      slot: (json['slot'] as num).toInt(),
+      type: PokemonType.fromJson(json['type'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$TypeSlotToJson(TypeSlot instance) => <String, dynamic>{
+      'slot': instance.slot,
+      'type': instance.type,
+    };
+
+PokemonType _$PokemonTypeFromJson(Map<String, dynamic> json) => PokemonType(
       name: json['name'] as String,
       url: json['url'] as String,
     );
 
-Map<String, dynamic> _$ElementToJson(Element instance) => <String, dynamic>{
+Map<String, dynamic> _$PokemonTypeToJson(PokemonType instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
     };
@@ -47,16 +58,6 @@ Cries _$CriesFromJson(Map<String, dynamic> json) => Cries(
 Map<String, dynamic> _$CriesToJson(Cries instance) => <String, dynamic>{
       'latest': instance.latest,
       'legacy': instance.legacy,
-    };
-
-Type _$TypeFromJson(Map<String, dynamic> json) => Type(
-      slot: (json['slot'] as num).toInt(),
-      type: Element.fromJson(json['type'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$TypeToJson(Type instance) => <String, dynamic>{
-      'slot': instance.slot,
-      'type': instance.type,
     };
 
 Sprites _$SpritesFromJson(Map<String, dynamic> json) => Sprites(

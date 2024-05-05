@@ -2,6 +2,7 @@ import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../models/dto/pokemon/pokemon.dart';
+import '../../../models/dto/pokemon_data/pokemon_data.dart';
 import '../../../models/dto/pokemon_generation/pokemon_generation.dart';
 import '../captured_page/captured_page.dart';
 
@@ -42,7 +43,7 @@ class PokedexController extends GetxController {
         .firstWhere((pokemon) => pokemon.id == pokemonID);
     capturedList.add(pokemon);
     saveCapturedList();
-    Get.to(CapturedPage(capturedPokemon: capturedList));
+    Get.to(CapturedPage());
   }
 
   saveCapturedList() {
@@ -51,5 +52,33 @@ class PokedexController extends GetxController {
       pokemonIDList.add(capturedList[x].id);
     }
     GetStorage().write("captured", pokemonIDList);
+  }
+
+  orderByID() {
+    capturedList.sort((a, b) => a.id.compareTo(b.id));
+  }
+
+  orderByName() {
+    capturedList.sort((a, b) => a.name.compareTo(b.name));
+  }
+
+  filterByTypes(List<PokemonType> filteredTypes) async {
+    List<PokemonData> pokemonData = [];
+    for (var x = 0; x < capturedList.length; x++) {
+      pokemonData.add(await capturedList[x].getPokemonData());
+    }
+
+    List<PokemonData> filteredData = [];
+    filteredData.addAll(pokemonData);
+    for (var x = 0; x < filteredTypes.length; x++) {
+      filteredData = pokemonData.map((pokemon) => pokemon).toList();
+    }
+
+    List<Pokemon> finalFilteredList = [];
+    for (var x = 0; x < filteredData.length; x++) {
+      finalFilteredList.add(Pokemon.fromJson(filteredData[x].toJson()));
+    }
+
+    capturedList.value = finalFilteredList;
   }
 }

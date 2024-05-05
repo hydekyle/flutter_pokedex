@@ -18,7 +18,7 @@ class PokedexPage extends GetView<PokedexController> {
                 children: [
                   // Pokemon Elastic List
                   SizedBox(
-                    height: context.height * 0.5,
+                    height: context.height * 0.8,
                     child: pokemonListPanel(
                       controller.generation.pokemonSpecies
                           .where((a) => a.name
@@ -41,8 +41,7 @@ class PokedexPage extends GetView<PokedexController> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => Get.to(
-                        CapturedPage(capturedPokemon: controller.capturedList)),
+                    onPressed: () => Get.to(CapturedPage()),
                     child: const Text("Tocame"),
                   ),
                 ],

@@ -9,7 +9,7 @@ class PokemonData {
   int weight;
   int height;
   Cries cries;
-  List<Type> types;
+  List<TypeSlot> types;
 
   PokemonData({
     required this.name,
@@ -28,19 +28,35 @@ class PokemonData {
 }
 
 @JsonSerializable()
-class Element {
+class TypeSlot {
+  int slot;
+  PokemonType type;
+
+  TypeSlot({
+    required this.slot,
+    required this.type,
+  });
+
+  factory TypeSlot.fromJson(Map<String, dynamic> json) =>
+      _$TypeSlotFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TypeSlotToJson(this);
+}
+
+@JsonSerializable()
+class PokemonType {
   String name;
   String url;
 
-  Element({
+  PokemonType({
     required this.name,
     required this.url,
   });
 
-  factory Element.fromJson(Map<String, dynamic> json) =>
-      _$ElementFromJson(json);
+  factory PokemonType.fromJson(Map<String, dynamic> json) =>
+      _$PokemonTypeFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ElementToJson(this);
+  Map<String, dynamic> toJson() => _$PokemonTypeToJson(this);
 }
 
 @JsonSerializable()
@@ -56,21 +72,6 @@ class Cries {
   factory Cries.fromJson(Map<String, dynamic> json) => _$CriesFromJson(json);
 
   Map<String, dynamic> toJson() => _$CriesToJson(this);
-}
-
-@JsonSerializable()
-class Type {
-  int slot;
-  Element type;
-
-  Type({
-    required this.slot,
-    required this.type,
-  });
-
-  factory Type.fromJson(Map<String, dynamic> json) => _$TypeFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TypeToJson(this);
 }
 
 @JsonSerializable()

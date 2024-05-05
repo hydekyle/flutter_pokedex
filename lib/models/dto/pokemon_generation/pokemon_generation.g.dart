@@ -13,6 +13,9 @@ PokemonGeneration _$PokemonGenerationFromJson(Map<String, dynamic> json) =>
       pokemonSpecies: (json['pokemon_species'] as List<dynamic>)
           .map((e) => Pokemon.fromJson(e as Map<String, dynamic>))
           .toList(),
+      types: (json['types'] as List<dynamic>)
+          .map((e) => PokemonType.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PokemonGenerationToJson(PokemonGeneration instance) =>
@@ -20,4 +23,5 @@ Map<String, dynamic> _$PokemonGenerationToJson(PokemonGeneration instance) =>
       'id': instance.id,
       'name': instance.name,
       'pokemon_species': instance.pokemonSpecies,
+      'types': instance.types,
     };
