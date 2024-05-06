@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/ui/pages/captured_page/captured_page.dart';
 import 'package:flutter_pokedex/ui/pages/pokedex_page/pokedex_controller.dart';
-import 'package:flutter_pokedex/ui/widgets/pokedex_section_title.dart';
 import 'package:get/get.dart';
 import '../../theme/text_pokedex.dart';
 import '../../widgets/button_pokemon.dart';
 import '../../widgets/list_panel_pokemon.dart';
 
+/// Pokedex main section, where you can see all Pokemon from a region and filter names
 class PokedexPage extends GetView<PokedexController> {
   const PokedexPage({super.key});
 
@@ -21,6 +21,7 @@ class PokedexPage extends GetView<PokedexController> {
       body: SizedBox(
         height: context.height,
         width: context.width,
+        // Display as a row or as a column by screen direction
         child: Flex(
           direction: isLandscape ? Axis.horizontal : Axis.vertical,
           children: [
@@ -57,8 +58,8 @@ class PokedexPage extends GetView<PokedexController> {
                 ],
               ),
             ),
-
             const Spacer(),
+            // Button to go to the captured page
             ButtonPokemon.big(
               onPressed: () => Get.to(const CapturedPage()),
               text: "Go to my captured pokemons",

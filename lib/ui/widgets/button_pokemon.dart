@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A reusable widget to display standardized buttons
 class ButtonPokemon extends StatelessWidget {
   final String text;
   final Function? onPressed;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ThemeDataPokemon {
+/// A helper class with static methods to manage Themes
+class ThemePokemon {
+  /// Get a specific color for a given PokemonType name
   static Color getColorByPokemonType(String typeName) {
     switch (typeName) {
       case "normal":
@@ -40,7 +42,8 @@ class ThemeDataPokemon {
     }
   }
 
-  static ThemeData getThemeData({Color? themeColor}) {
+  /// Get a ThemeData using a given color as ColorScheme seed
+  static ThemeData getThemeDataByColor(Color? themeColor) {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
         seedColor: themeColor ?? Colors.deepOrange,

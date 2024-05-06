@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_pokedex/ui/theme/text_pokedex.dart';
 import 'package:flutter_pokedex/ui/widgets/button_pokemon.dart';
 import 'package:flutter_pokedex/ui/widgets/chip_pokemon_type.dart';
 import 'package:flutter_pokedex/ui/widgets/list_panel_pokemon.dart';
-import 'package:flutter_pokedex/ui/widgets/pokedex_section_title.dart';
 import 'package:get/get.dart';
 import 'captured_controller.dart';
 
+/// A section to display and manage all Pokemon marked as captured
 class CapturedPage extends GetView<CapturedController> {
   final int? animatedHeroID;
 
@@ -32,8 +31,6 @@ class CapturedPage extends GetView<CapturedController> {
       }
       return widgets;
     }
-
-    final isLandscape = Get.width > Get.height;
 
     return Scaffold(
       appBar: AppBar(

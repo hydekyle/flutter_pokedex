@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// A method extension to parse int (pokemonID) as string with 000 format
 extension ParseToPokemonID on int {
   String parseToPokemonID() {
     String value = toString();
@@ -14,6 +15,7 @@ extension ParseToPokemonID on int {
   }
 }
 
+/// A reusable widget to display standardized text using Google Fonts
 class TextPokedex extends StatelessWidget {
   final bool? textOverflow;
   final String text;

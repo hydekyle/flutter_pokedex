@@ -6,6 +6,7 @@ import '../../models/dto/pokemon/pokemon.dart';
 import '../../services/api_pokemon_service.dart';
 import '../pages/pokemon_info_page/pokemon_info_page.dart';
 
+/// Display a scrollable list of Pokemon
 Widget listPanelPokemon(
   List<Pokemon> pokemonList, {
   int? heroTagID,

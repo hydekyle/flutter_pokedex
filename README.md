@@ -1,24 +1,10 @@
-<div style="text-align:center">
-    <img src="./assets/images/devest.svg" alt="image" width="60%" height="auto">
-</div>
 
-# Pokédex
+## Project settings
+Flutter Channel stable, 3.19.6
 
-<div style="text-align:center">
-    <img src="./assets/images/oak.png" alt="image" width="30%" height="auto">
-</div>
-
-¡Hola entrenadores Pokémon! Soy el Profesor Oak, y tengo un desafío para vosotros que 
-estáis ansiosos por demostrar vuestras habilidades en Flutter y desarrollo multiplataforma.
-
-En colaboración con mis amigos de Devest y dado que los teléfonos inteligentes e internet son ya
-el pan nuestro de cada día, hemos pensado que en lugar de tener que llevar en el bolsillo
-una Pokédex física, los entrenadores como tú podrían tener accesible la Pokédex en sus teléfonos
-móviles u ordenadores.
-
-Te cuento más en detalle...
-
-## Requisitos
+## Features
+All API calls are cached to disk using flutter_cache_manager.
+Images are cached to disk using cached_network_image.
 
 ### Objetivo
 

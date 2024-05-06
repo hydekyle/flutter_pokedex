@@ -8,6 +8,8 @@ import '../../theme/text_pokedex.dart';
 import '../../widgets/chip_pokemon_type.dart';
 import '../captured_page/captured_page.dart';
 
+/// Show details of a Pokemon.
+/// It shows when the users click a Pokemon from anywhere
 class PokemonInfoPage extends GetView<CapturedController> {
   final PokemonData pokemonData;
 
@@ -20,25 +22,30 @@ class PokemonInfoPage extends GetView<CapturedController> {
   Widget build(BuildContext context) {
     bool isCaptured = controller.isPokemonCaptured(pokemonData.id);
     return SizedBox(
+      // Display as a row or as a column by screen direction
       child: Flex(
         direction: Get.width < Get.height ? Axis.vertical : Axis.horizontal,
         children: [
+          // Name and ID
           Column(
             children: [
               TextPokedex.title(text: pokemonData.name.toUpperCase()),
               TextPokedex.id(text: pokemonData.id.parseToPokemonID()),
             ],
           ),
+          // Pokemon photo
           SizedBox.square(
             dimension: 180,
             child: ApiPokemonService.getPokemonImageByID(pokemonData.id),
           ),
+          // Weight and height
           Column(
             children: [
               Text("Weight: ${pokemonData.weight}"),
               Text("Height: ${pokemonData.height}"),
             ],
           ),
+          // List of Pokemon types
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -52,6 +59,7 @@ class PokemonInfoPage extends GetView<CapturedController> {
                   .toList(),
             ),
           ),
+          // Capture button
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: ButtonPokemon(

@@ -1,18 +1,11 @@
-import 'package:flutter_pokedex/services/api_pokemon_service.dart';
 import 'package:get/get.dart';
 import '../../../models/dto/pokemon_generation/pokemon_generation.dart';
 
+/// Handles the regional Pokedex, it's only used from pokedex_page.dart,
+/// but it could be used from anywhere since we use Get.put() in main.dart
 class PokedexController extends GetxController {
-  late final PokemonGeneration generation;
-  final int generationID;
+  final PokemonGeneration generation;
   final pokemonNameFilter = "".obs;
 
-  PokedexController({required this.generationID});
-
-  init() async {
-    // Load region data
-    generation = await ApiPokemonService.getGenerationDataByID(generationID);
-    // Sort Pokemon List by ID since API delivers it unsorted
-    generation.pokemonSpecies.sort((a, b) => a.id.compareTo(b.id));
-  }
+  PokedexController(this.generation);
 }

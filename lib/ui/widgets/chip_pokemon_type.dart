@@ -18,7 +18,7 @@ class ChipPokemonType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = ThemeDataPokemon.getColorByPokemonType(typeName);
+    final color = ThemePokemon.getColorByPokemonType(typeName);
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: GestureDetector(
