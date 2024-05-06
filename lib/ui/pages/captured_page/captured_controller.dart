@@ -46,6 +46,7 @@ class CapturedController extends GetxController {
 
   deleteFromCapturedList(int pokemonID) {
     capturedList.removeWhere((pokemon) => pokemon.id == pokemonID);
+    filteredCapturedList.removeWhere((pokemon) => pokemon.id == pokemonID);
     saveCapturedList();
   }
 
@@ -66,7 +67,11 @@ class CapturedController extends GetxController {
   }
 
   orderCapturedListByName() {
-    capturedList.sort((a, b) => a.name.compareTo(b.name));
+    if (filterTypeList.isNotEmpty) {
+      filteredCapturedList.sort((a, b) => a.name.compareTo(b.name));
+    } else {
+      capturedList.sort((a, b) => a.name.compareTo(b.name));
+    }
   }
 
   filterCapturedListByTypes() async {

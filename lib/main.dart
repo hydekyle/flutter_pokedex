@@ -27,23 +27,8 @@ class Pokedex extends StatelessWidget {
       title: 'Pokédex Code Challenge',
       theme: ThemeData.light(),
       themeMode: ThemeMode.light,
-      home: const Home(),
+      home: const PokedexPage(),
       debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Get.theme.colorScheme.inversePrimary,
-        title: const Text('Pokédex Code Challenge'),
-      ),
-      body: const PokedexPage(),
     );
   }
 }
