@@ -1,10 +1,10 @@
 import 'dart:collection';
-import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/models/dto/pokemon/pokemon.dart';
 import 'package:flutter_pokedex/models/dto/pokemon_data/pokemon_data.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../models/dto/pokemon_generation/pokemon_generation.dart';
+import '../../theme/theme.dart';
 
 class CapturedController extends GetxController {
   final PokemonGeneration generation;
@@ -15,7 +15,8 @@ class CapturedController extends GetxController {
   CapturedController({required this.generation});
 
   List<String> get availableTypeNames =>
-      generation.types.map((type) => type.name).toList();
+      generation.types.map((type) => type.name).toList()
+        ..sort((a, b) => a.compareTo(b));
 
   init() async {
     // Load saved captured pokemonID list
@@ -55,6 +56,10 @@ class CapturedController extends GetxController {
     }
     GetStorage().write("captured", pokemonIDList);
   }
+
+  bool isPokemonCaptured(int pokemonID) =>
+      capturedList.firstWhereOrNull((element) => element.id == pokemonID) !=
+      null;
 
   orderCapturedListByID() {
     capturedList.sort((a, b) => a.id.compareTo(b.id));
@@ -102,7 +107,10 @@ class CapturedController extends GetxController {
   }
 
   changeThemeByCaputedList() async {
-    if (capturedList.isEmpty) return;
+    if (capturedList.isEmpty) {
+      Get.changeTheme(ThemeDataPokemon.getThemeData());
+      return;
+    }
 
     List<PokemonData> capturedPokemonDataList =
         await getPokemonDataListByPokemonList(capturedList);
@@ -121,63 +129,22 @@ class CapturedController extends GetxController {
       }
     }
 
-    final myList = totalTypeAmountMap.entries.toList();
-    myList.sort((a, b) => a.value.compareTo(b.value));
-    final maxValue = myList.last.value;
-    final isMaxValueDraw =
-        myList.where((test) => test.value == maxValue).toList().length >= 2;
+    final typesOrderByAmount = totalTypeAmountMap.entries.toList();
+    typesOrderByAmount.sort((a, b) => a.value.compareTo(b.value));
+    final maxValue = typesOrderByAmount.last.value;
+    final isMaxValueDraw = typesOrderByAmount
+            .where((test) => test.value == maxValue)
+            .toList()
+            .length >=
+        2;
 
     if (isMaxValueDraw) {
-      Get.changeTheme(getThemeData());
+      Get.changeTheme(ThemeDataPokemon.getThemeData());
     } else {
-      Get.changeTheme(
-          getThemeData(themeColor: getColorByPokemonType(myList.last.key)));
+      final color =
+          ThemeDataPokemon.getColorByPokemonType(typesOrderByAmount.last.key);
+      Get.changeTheme(ThemeDataPokemon.getThemeData(themeColor: color));
     }
-  }
-
-  Color getColorByPokemonType(String typeName) {
-    switch (typeName) {
-      case "normal":
-        return Colors.grey;
-      case "fighting":
-        return Colors.brown.shade700;
-      case "flying":
-        return Colors.blueGrey;
-      case "poison":
-        return Colors.deepPurple;
-      case "ground":
-        return Colors.orange;
-      case "rock":
-        return Colors.brown;
-      case "bug":
-        return Colors.pink;
-      case "ghost":
-        return Colors.deepPurple.shade800;
-      case "fire":
-        return Colors.red;
-      case "water":
-        return Colors.blue;
-      case "grass":
-        return Colors.green;
-      case "electric":
-        return Colors.amber;
-      case "psychic":
-        return Colors.pink;
-      case "ice":
-        return Colors.cyan;
-      case "dragon":
-        return Colors.purple;
-      case _:
-        return Colors.deepOrange;
-    }
-  }
-
-  ThemeData getThemeData({Color? themeColor}) {
-    return ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: themeColor ?? Colors.deepOrange,
-      ),
-    );
   }
 
   Future<List<PokemonData>> getPokemonDataListByPokemonList(

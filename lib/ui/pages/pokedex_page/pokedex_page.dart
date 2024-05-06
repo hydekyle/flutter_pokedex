@@ -14,12 +14,12 @@ class PokedexPage extends GetView<PokedexController> {
         // Pokemon Elastic List
         SizedBox(
           height: context.height * 0.8,
-          child: pokemonListPanel(
+          child: Obx(() => pokemonListPanel(
               controller.generation.pokemonSpecies
                   .where((a) =>
                       a.name.contains(controller.pokemonNameFilter.value))
                   .toList(),
-              null),
+              null)),
         ),
         // Name Filter
         Center(

@@ -28,6 +28,7 @@ class Pokedex extends StatelessWidget {
       theme: ThemeData.light(),
       themeMode: ThemeMode.light,
       home: const Home(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

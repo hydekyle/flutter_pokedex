@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/ui/widgets/chip_type.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemon_list_panel.dart';
 import 'package:get/get.dart';
 import 'captured_controller.dart';
@@ -18,13 +19,11 @@ class CapturedPage extends GetView<CapturedController> {
     List<Widget> widgets() {
       final List<Widget> widgets = [];
       for (var x = 0; x < controller.filterTypeList.length; x++) {
-        widgets.add(GestureDetector(
+        widgets.add(ChipType(
+          typeName: controller.filterTypeList[x],
+          showIcon: Icons.delete,
           onTap: () =>
               controller.removeFilterType(controller.filterTypeList[x]),
-          child: Row(children: [
-            Text(controller.filterTypeList[x]),
-            const Icon(Icons.delete),
-          ]),
         ));
       }
       return widgets;
